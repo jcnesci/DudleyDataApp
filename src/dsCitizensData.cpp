@@ -614,3 +614,83 @@ float dsCitizensData::getMinEventsPerMinute(){
   }
   return ( *std::min_element(eventsPerMinuteInLastHour.begin(), eventsPerMinuteInLastHour.end()) );
 }
+
+// Compiles the stats of all neighborhoods, if not done already. Used in UI, in neighborhood dropdown.
+void dsCitizensData::calculateAllNeighborhoodStats(){
+  
+  if(!isNeighborhoodStatsCalculated){
+    for(auto n : neighborhoods){
+      allNeighborhoodStats.nOpen += n->getOpenCount();
+      allNeighborhoodStats.nClosed += n->getClosedCount();
+      allNeighborhoodStats.nToday += n->getDayCount();
+      allNeighborhoodStats.nThisHour += n->getHourCount();
+      allNeighborhoodStats.nThisWeek += n->getWeekCount();
+    }
+    allNeighborhoodStats.openClosedRatio = float(allNeighborhoodStats.nOpen) / float(allNeighborhoodStats.nClosed);
+    isNeighborhoodStatsCalculated = true;
+  }
+}
+int dsCitizensData::getNeighborhoodOpenCount(){
+  calculateAllNeighborhoodStats();
+  return allNeighborhoodStats.nOpen;
+}
+int dsCitizensData::getNeighborhoodClosedCount(){
+  calculateAllNeighborhoodStats();
+  return allNeighborhoodStats.nClosed;
+}
+float dsCitizensData::getNeighborhoodOpenClosedRatio(){
+  calculateAllNeighborhoodStats();
+  return allNeighborhoodStats.openClosedRatio;
+}
+int dsCitizensData::getNeighborhoodDayCount(){
+  calculateAllNeighborhoodStats();
+  return allNeighborhoodStats.nToday;
+}
+int dsCitizensData::getNeighborhoodHourCount(){
+  calculateAllNeighborhoodStats();
+  return allNeighborhoodStats.nThisHour;
+}
+int dsCitizensData::getNeighborhoodWeekCount(){
+  calculateAllNeighborhoodStats();
+  return allNeighborhoodStats.nThisWeek;
+}
+
+// Compiles the stats of all categories, if not done already. Used in UI, in neighborhood dropdown.
+void dsCitizensData::calculateAllCategoryStats(){
+  
+  if(!isCategoryStatsCalculated){
+    for(auto c : categories){
+      allCategoryStats.nOpen += c->getOpenCount();
+      allCategoryStats.nClosed += c->getClosedCount();
+      allCategoryStats.nToday += c->getDayCount();
+      allCategoryStats.nThisHour += c->getHourCount();
+      allCategoryStats.nThisWeek += c->getWeekCount();
+    }
+    allCategoryStats.openClosedRatio = float(allCategoryStats.nOpen) / float(allCategoryStats.nClosed);
+    isCategoryStatsCalculated = true;
+  }
+}
+int dsCitizensData::getCategoryOpenCount(){
+  calculateAllCategoryStats();
+  return allCategoryStats.nOpen;
+}
+int dsCitizensData::getCategoryClosedCount(){
+  calculateAllCategoryStats();
+  return allCategoryStats.nClosed;
+}
+float dsCitizensData::getCategoryOpenClosedRatio(){
+  calculateAllCategoryStats();
+  return allCategoryStats.openClosedRatio;
+}
+int dsCitizensData::getCategoryDayCount(){
+  calculateAllCategoryStats();
+  return allCategoryStats.nToday;
+}
+int dsCitizensData::getCategoryHourCount(){
+  calculateAllCategoryStats();
+  return allCategoryStats.nThisHour;
+}
+int dsCitizensData::getCategoryWeekCount(){
+  calculateAllCategoryStats();
+  return allCategoryStats.nThisWeek;
+}

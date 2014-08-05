@@ -97,6 +97,7 @@ void dsUIObject::setup()
   UI->addLabel("Neighborhood Stats", OFX_UI_FONT_MEDIUM);
   vector<string> neighborhoods = data->getNeighborhoodNames();
   neighborhoodDropdown = UI->addDropDownList("Select neighborhood", neighborhoods);
+  neighborhoodDropdown->addToggle("ALL");
   neighborhoodDropdown->setAutoClose(true);
   neighborhoodDropdown->setShowCurrentSelected(true);
   for (auto t : neighborhoodDropdown->getToggles()){
@@ -135,6 +136,7 @@ void dsUIObject::setup()
   UI->addLabel("Category Stats", OFX_UI_FONT_MEDIUM);
   vector<string> categories = data->getCategoryNames();
   categoryDropdown = UI->addDropDownList("Select category", categories);
+  categoryDropdown->addToggle("ALL");
   categoryDropdown->setAutoClose(true);
   categoryDropdown->setShowCurrentSelected(true);
   for (auto t : categoryDropdown->getToggles()){
@@ -251,24 +253,45 @@ void dsUIObject::update()
 // Update the dropdowns when they are interacted with.
 void dsUIObject::updateDropdown(string iDropdownName, string iSelectedItem){
   if (iDropdownName == "Select neighborhood"){
-    dsNeighborhood* curNeighborhood = data->getNeighborhoodByName(iSelectedItem);
 
-    neighborhoodOpenLabel->setLabel("open: "+ ofToString( curNeighborhood->getOpenCount() ));
-    neighborhoodClosedLabel->setLabel("closed: "+ ofToString( curNeighborhood->getClosedCount() ));
-    neighborhoodRatioLabel->setLabel("ratio: "+ ofToString( curNeighborhood->getOpenClosedRatio(), 2 ));
-    neighborhoodHourLabel->setLabel("this hour: "+ ofToString( curNeighborhood->getHourCount() ));
-    neighborhoodTodayLabel->setLabel("today: "+ ofToString( curNeighborhood->getDayCount() ));
-    neighborhoodWeekLabel->setLabel("this week: "+ ofToString( curNeighborhood->getWeekCount() ));
-    neighborhoodCategoriesTextArea->setTextString("categories: "+ curNeighborhood->getEventsPerCategoryString() );
-  } else if (iDropdownName == "Select category"){
-    dsCategory* curCategory = data->getCategoryByName(iSelectedItem);
+    if(iSelectedItem == "ALL"){
+      neighborhoodOpenLabel->setLabel("open: "+ ofToString( data->getNeighborhoodOpenCount() ));
+      neighborhoodClosedLabel->setLabel("closed: "+ ofToString( data->getNeighborhoodClosedCount() ));
+      neighborhoodRatioLabel->setLabel("ratio: "+ ofToString( data->getNeighborhoodOpenClosedRatio(), 2 ));
+      neighborhoodHourLabel->setLabel("this hour: "+ ofToString( data->getNeighborhoodHourCount() ));
+      neighborhoodTodayLabel->setLabel("today: "+ ofToString( data->getNeighborhoodDayCount() ));
+      neighborhoodWeekLabel->setLabel("this week: "+ ofToString( data->getNeighborhoodWeekCount() ));
+      neighborhoodCategoriesTextArea->setTextString("categories: N/A" );
+    } else {
+      dsNeighborhood* curNeighborhood = data->getNeighborhoodByName(iSelectedItem);
+      neighborhoodOpenLabel->setLabel("open: "+ ofToString( curNeighborhood->getOpenCount() ));
+      neighborhoodClosedLabel->setLabel("closed: "+ ofToString( curNeighborhood->getClosedCount() ));
+      neighborhoodRatioLabel->setLabel("ratio: "+ ofToString( curNeighborhood->getOpenClosedRatio(), 2 ));
+      neighborhoodHourLabel->setLabel("this hour: "+ ofToString( curNeighborhood->getHourCount() ));
+      neighborhoodTodayLabel->setLabel("today: "+ ofToString( curNeighborhood->getDayCount() ));
+      neighborhoodWeekLabel->setLabel("this week: "+ ofToString( curNeighborhood->getWeekCount() ));
+      neighborhoodCategoriesTextArea->setTextString("categories: "+ curNeighborhood->getEventsPerCategoryString() );
+    }
     
-    categoryOpenLabel->setLabel("open: "+ ofToString( curCategory->getOpenCount() ));
-    categoryClosedLabel->setLabel("closed: "+ ofToString( curCategory->getClosedCount() ));
-    categoryRatioLabel->setLabel("ratio: "+ ofToString( curCategory->getOpenClosedRatio(), 2 ));
-    categoryHourLabel->setLabel("this hour: "+ ofToString( curCategory->getHourCount() ));
-    categoryTodayLabel->setLabel("today: "+ ofToString( curCategory->getDayCount() ));
-    categoryWeekLabel->setLabel("this week: "+ ofToString( curCategory->getWeekCount() ));
+  } else if (iDropdownName == "Select category"){
+
+    if(iSelectedItem == "ALL"){
+      categoryOpenLabel->setLabel("open: "+ ofToString( data->getCategoryOpenCount() ));
+      categoryClosedLabel->setLabel("closed: "+ ofToString( data->getCategoryClosedCount() ));
+      categoryRatioLabel->setLabel("ratio: "+ ofToString( data->getCategoryOpenClosedRatio(), 2 ));
+      categoryHourLabel->setLabel("this hour: "+ ofToString( data->getCategoryHourCount() ));
+      categoryTodayLabel->setLabel("today: "+ ofToString( data->getCategoryDayCount() ));
+      categoryWeekLabel->setLabel("this week: "+ ofToString( data->getCategoryWeekCount() ));
+    } else {
+      dsCategory* curCategory = data->getCategoryByName(iSelectedItem);
+      categoryOpenLabel->setLabel("open: "+ ofToString( curCategory->getOpenCount() ));
+      categoryClosedLabel->setLabel("closed: "+ ofToString( curCategory->getClosedCount() ));
+      categoryRatioLabel->setLabel("ratio: "+ ofToString( curCategory->getOpenClosedRatio(), 2 ));
+      categoryHourLabel->setLabel("this hour: "+ ofToString( curCategory->getHourCount() ));
+      categoryTodayLabel->setLabel("today: "+ ofToString( curCategory->getDayCount() ));
+      categoryWeekLabel->setLabel("this week: "+ ofToString( curCategory->getWeekCount() ));
+    }
+    
   }
 
 }

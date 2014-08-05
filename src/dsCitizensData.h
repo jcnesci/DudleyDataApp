@@ -24,6 +24,15 @@
 #include "Poco/Timezone.h"
 #include <ctime>
 
+struct allStats{
+  int								nOpen = 0;
+  int								nClosed = 0;
+  float							openClosedRatio = 0;
+  int								nToday = 0;
+  int								nThisHour = 0;
+  int								nThisWeek = 0;
+};
+
 class dsCitizensData:public ofxObject{
 
 public:
@@ -80,6 +89,22 @@ public:
   
   string                getEventText();
   
+  void                  calculateAllNeighborhoodStats();
+  int                   getNeighborhoodDayCount();
+  int                   getNeighborhoodHourCount();
+  int                   getNeighborhoodWeekCount();
+  int                   getNeighborhoodOpenCount();
+  int                   getNeighborhoodClosedCount();
+  float                 getNeighborhoodOpenClosedRatio();
+
+  void                  calculateAllCategoryStats();
+  int                   getCategoryDayCount();
+  int                   getCategoryHourCount();
+  int                   getCategoryWeekCount();
+  int                   getCategoryOpenCount();
+  int                   getCategoryClosedCount();
+  float                 getCategoryOpenClosedRatio();
+
 	//DEV fcts
   void									printCategoryCounter();
   void									printCategoryContents();
@@ -123,4 +148,9 @@ private:
 
   vector<dsCitizensDataSubscriber*>       eventSubscribers;
   
+  allStats                                allNeighborhoodStats;
+  bool                                    isNeighborhoodStatsCalculated = false;
+  allStats                                allCategoryStats;
+  bool                                    isCategoryStatsCalculated = false;
+
 };

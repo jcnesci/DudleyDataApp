@@ -115,3 +115,17 @@ int dsNeighborhood::getCategoryCount(string iCategoryName){
   return stats.nEventsPerCategory[iCategoryName];
 }
 
+// Return the event categories map as a string, for the UI.
+string dsNeighborhood::getEventsPerCategoryString(){
+  string epc;
+  for(map<string, int>::const_iterator it = stats.nEventsPerCategory.begin(); it != stats.nEventsPerCategory.end(); it++){
+    cout<< it->first <<"\t"<< it->second <<endl;
+    
+    string c = it->first;
+    int n = it->second;
+    epc = epc + ofToString(c) + " " + ofToString(n) + ", ";
+  }
+  epc = epc.substr(0, epc.size()-2);        // remove the last ", " we don't need.
+  
+  return epc;
+}

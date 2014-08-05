@@ -39,6 +39,7 @@ public:
   int								getClosedCount(){ return stats.nClosed; }
   float							getOpenClosedRatio(){ return stats.openClosedRatio; }
   map<string, int>	getEventsPerCategory(){ return stats.nEventsPerCategory; }
+  string            getEventsPerCategoryString();
   int								getCategoryCount(string iCategoryName);
   vector<float>			getVertsX();
   vector<float>			getVertsY();

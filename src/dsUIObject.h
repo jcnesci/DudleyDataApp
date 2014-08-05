@@ -54,6 +54,7 @@ public:
   ofxUILabel*           neighborhoodHourLabel;
   ofxUILabel*           neighborhoodTodayLabel;
   ofxUILabel*           neighborhoodWeekLabel;
+  ofxUITextArea*        neighborhoodCategoriesTextArea;
   ofxUIDropDownList*    categoryDropdown;
   ofxUILabel*           categoryOpenLabel;
   ofxUILabel*           categoryClosedLabel;

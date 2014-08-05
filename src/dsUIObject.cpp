@@ -126,6 +126,9 @@ void dsUIObject::setup()
   neighborhoodWeekLabel = NULL;
   neighborhoodWeekLabel = new ofxUILabel("this week: ", OFX_UI_FONT_SMALL);
   UI->addWidgetDown(neighborhoodWeekLabel);
+
+  neighborhoodCategoriesTextArea = UI->addTextArea("neighborhoodCategories", "categories: this dummy text is used to create a textarea with 3 lineheights, necessary later for inserting categories.", OFX_UI_FONT_SMALL);
+  neighborhoodCategoriesTextArea->setTextString("categories:");
   //
   UI->addSpacer();
   //
@@ -161,6 +164,7 @@ void dsUIObject::setup()
   categoryWeekLabel = NULL;
   categoryWeekLabel = new ofxUILabel("this week: ", OFX_UI_FONT_SMALL);
   UI->addWidgetDown(categoryWeekLabel);
+  
   //
   UI->addSpacer();
   // Buttons
@@ -174,9 +178,6 @@ void dsUIObject::setup()
   graphEpmBuffer = getGraphData();
   graphEpm = UI->addMovingGraph("eventsPerMinute", graphEpmBuffer, graphEpmBuffer.size(), 0.0, 2.0);
   
-  //DEV_jn
-//  string textString = "This widget is a text area widget. Use this when you need to display a paragraph of text. It takes care of formatting the text to fit the block.";
-//  gui1->addTextArea("textarea", textString, OFX_UI_FONT_SMALL);
 }
 
 vector<float> dsUIObject::getGraphData(){
@@ -258,6 +259,7 @@ void dsUIObject::updateDropdown(string iDropdownName, string iSelectedItem){
     neighborhoodHourLabel->setLabel("this hour: "+ ofToString( curNeighborhood->getHourCount() ));
     neighborhoodTodayLabel->setLabel("today: "+ ofToString( curNeighborhood->getDayCount() ));
     neighborhoodWeekLabel->setLabel("this week: "+ ofToString( curNeighborhood->getWeekCount() ));
+    neighborhoodCategoriesTextArea->setTextString("categories: "+ curNeighborhood->getEventsPerCategoryString() );
   } else if (iDropdownName == "Select category"){
     dsCategory* curCategory = data->getCategoryByName(iSelectedItem);
     

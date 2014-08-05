@@ -78,6 +78,8 @@ public:
   void									updateSubscribers(dsEvent* iEvent);
   void									addEventSubscriber(dsCitizensDataSubscriber* iSubscriber);
   
+  string                getEventText();
+  
 	//DEV fcts
   void									printCategoryCounter();
   void									printCategoryContents();

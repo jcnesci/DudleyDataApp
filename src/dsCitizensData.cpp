@@ -120,6 +120,10 @@ void dsCitizensData::fetchGeoJson(){
   
 }
 
+string dsCitizensData::getEventText(){
+  
+}
+
 // Is used to get new data by polling every few seconds. Loop durationd defined in idle loop.
 void dsCitizensData::fetchRealtimeEventJson(){
   

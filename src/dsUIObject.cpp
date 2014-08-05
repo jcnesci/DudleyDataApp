@@ -175,7 +175,10 @@ void dsUIObject::setup()
   UI->addLabel("min: "+ ofToString(data->getMinEventsPerMinute()) +", max: "+ ofToString(data->getMaxEventsPerMinute()), OFX_UI_FONT_SMALL);
   graphEpmBuffer = getGraphData();
   graphEpm = UI->addMovingGraph("eventsPerMinute", graphEpmBuffer, graphEpmBuffer.size(), 0.0, 2.0);
-
+  
+  //DEV_jn
+//  string textString = "This widget is a text area widget. Use this when you need to display a paragraph of text. It takes care of formatting the text to fit the block.";
+//  gui1->addTextArea("textarea", textString, OFX_UI_FONT_SMALL);
 }
 
 vector<float> dsUIObject::getGraphData(){

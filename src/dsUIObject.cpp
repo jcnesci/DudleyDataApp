@@ -187,6 +187,8 @@ vector<float> dsUIObject::getGraphData(){
 }
 
 void dsUIObject::buildUIreadouts(){
+  /*
+   
   int ofAppCornerOffset = 20;
   int readoutsHeight = 300;
   int readoutsWidth = ofGetWidth() - (ofAppCornerOffset*2);
@@ -207,9 +209,50 @@ void dsUIObject::buildUIreadouts(){
   vector<dsEvent*>::const_iterator last = data->getEvents().end();
   lastEventsForReadout.assign(first, last);
   
-  
+
   ofxUIScrollableCanvas *scrollZone = new ofxUIScrollableCanvas(0,readoutsY,readoutsWidth,readoutsHeight);
+//  UIreadouts->ofxUIWidget::addWidget(scrollZone);
+//  UIreadouts->addWidgetDown(scrollZone);
   
+  string textString = "This widget is a text area widget. Use this when you need to display a paragraph of text. It takes care of formatting the text to fit the block.";
+  scrollZone->addTextArea("textarea", textString, OFX_UI_FONT_SMALL);
+  scrollZone->autoSizeToFitWidgets();
+
+  */
+  
+  int ofAppCornerOffset = 20;
+  int readoutsHeight = 300;
+  int readoutsWidth = ofGetWidth() - (ofAppCornerOffset*2);
+  int readoutsY = ofGetHeight()-readoutsHeight - (ofAppCornerOffset*2);
+  // Define the canvas for the event readouts.
+  UIreadouts = new ofxUIScrollableCanvas(0,readoutsY,readoutsWidth,readoutsHeight);
+  UIreadouts->setScrollArea(0,readoutsY,readoutsWidth,readoutsHeight);
+  UIreadouts->setScrollableDirections(false, true);
+//  UIreadouts->setSnapping(false);
+  
+  UIreadouts->setTheme(OFX_UI_THEME_MACOSX);
+  UIreadouts->disableAppEventCallbacks();
+  UIreadouts->disableMouseEventCallbacks();
+  UIreadouts->setWidgetFontSize(OFX_UI_FONT_SMALL);
+  
+  UIreadouts->addLabel("[2] Readouts", OFX_UI_FONT_MEDIUM);
+  UIreadouts->addSpacer();
+  
+  // Get last few events to print text to UI as readout.
+  int numLastEventsDesired = 10;
+  vector<dsEvent*>::const_iterator first = data->getEvents().begin();
+  vector<dsEvent*>::const_iterator last = data->getEvents().begin() + numLastEventsDesired;
+  lastEventsForReadout.assign(first, last);
+  
+  for(auto e : lastEventsForReadout){
+    UIreadouts->addLabel("Time:          "+ e->getTimeString(), OFX_UI_FONT_SMALL);
+    UIreadouts->addLabel("Description:     "+ e->getDescription(), OFX_UI_FONT_SMALL);
+    UIreadouts->addLabel("Category:       "+ e->getCategory(), OFX_UI_FONT_SMALL);
+    UIreadouts->addLabel("Neighborhood:   "+ e->getNeighborhood(), OFX_UI_FONT_SMALL);
+    UIreadouts->addLabel("Status:         "+ e->getStatus(), OFX_UI_FONT_SMALL);
+    UIreadouts->addSpacer();
+  }
+
 }
 
 void dsUIObject::idle(float iTime)
@@ -289,7 +332,7 @@ void dsUIObject::onMouseReleased(ofMouseEventArgs & iArgs)
   screenWidthHack = (0 - ofGetWidth() )/2.0;
   
   UI->mouseReleased(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack, iArgs.button);
-  
+  UIreadouts->mouseReleased(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack, iArgs.button);
 }
 
 void dsUIObject::onMousePressed(ofMouseEventArgs & iArgs)
@@ -298,6 +341,7 @@ void dsUIObject::onMousePressed(ofMouseEventArgs & iArgs)
   screenWidthHack = (0 - ofGetWidth() )/2.0;
   
   UI->mousePressed(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack, iArgs.button);
+  UIreadouts->mousePressed(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack, iArgs.button);
 }
 
 void dsUIObject::onMouseMoved(ofMouseEventArgs & iArgs)
@@ -306,6 +350,7 @@ void dsUIObject::onMouseMoved(ofMouseEventArgs & iArgs)
   screenWidthHack = (0 - ofGetWidth() )/2.0;
   
   UI->mouseMoved(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack);
+  UIreadouts->mouseMoved(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack);
 }
 
 void dsUIObject::onMouseDragged(ofMouseEventArgs & iArgs)
@@ -314,4 +359,5 @@ void dsUIObject::onMouseDragged(ofMouseEventArgs & iArgs)
   screenWidthHack = (0 - ofGetWidth() )/2.0;
   
   UI->mouseDragged(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack, iArgs.button);
+  UIreadouts->mouseDragged(iArgs.x - getTrans().x + screenWidthHack, iArgs.y+getTrans().y + windowBarHack, iArgs.button);
 }

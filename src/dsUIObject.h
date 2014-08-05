@@ -65,7 +65,7 @@ public:
   ofxUIMovingGraph*     graphEpm;
   vector<float>         graphEpmBuffer;
   
-  ofxUICanvas*          UIreadouts;
+  ofxUIScrollableCanvas*          UIreadouts;
   vector<dsEvent*>      lastEventsForReadout;
   
 private:

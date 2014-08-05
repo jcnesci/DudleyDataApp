@@ -145,12 +145,13 @@ void dsCitizensData::fetchRealtimeEventJson(){
 			for(int i=0; i<jsonResults.size(); i++) {
 				// Event attributes based on default Open311 data attributes.
 				dsEvent* e = new dsEvent(
-																 i,
-																 jsonResults[i]["updated_datetime"].asString(),
-																 jsonResults[i]["status"].asString(),
-																 jsonResults[i]["lat"].asFloat(),
-																 jsonResults[i]["long"].asFloat(),
-																 jsonResults[i]["service_name"].asString()
+                                  i,
+                                  jsonResults[i]["updated_datetime"].asString(),
+                                  jsonResults[i]["status"].asString(),
+                                  jsonResults[i]["lat"].asFloat(),
+                                  jsonResults[i]["long"].asFloat(),
+                                  jsonResults[i]["service_name"].asString(),
+                                  jsonResults[i]["description"].asString()
 																 );
 				events.push_back(e);
 				// Add a few custom attributes of our own.
@@ -246,12 +247,13 @@ void dsCitizensData::fetchHistoricEventJson(){
 			for(int i=0; i<jsonResults.size(); i++) {
 				// Event attributes based on default Open311 data attributes.
 				dsEvent* e = new dsEvent(
-																 i,
-																 jsonResults[i]["updated_datetime"].asString(),
-																 jsonResults[i]["status"].asString(),
-																 jsonResults[i]["lat"].asFloat(),
-																 jsonResults[i]["long"].asFloat(),
-																 jsonResults[i]["service_name"].asString()
+                                  i,
+                                  jsonResults[i]["updated_datetime"].asString(),
+                                  jsonResults[i]["status"].asString(),
+                                  jsonResults[i]["lat"].asFloat(),
+                                  jsonResults[i]["long"].asFloat(),
+                                  jsonResults[i]["service_name"].asString(),
+                                  jsonResults[i]["description"].asString()
 																 );
 				events.push_back(e);
 				// Add a few custom attributes of our own.
@@ -285,12 +287,12 @@ void dsCitizensData::fetchHistoricEventJson(){
 			//printNeighborhoodContents();
 			
 			// Save to file : pretty print
-//			if(!jsonResults.save("example_output_pretty.json",true)) {
-//        cout << "example_output_pretty.json written unsuccessfully." << endl;
-//			} else {
-//        cout << "example_output_pretty.json written successfully." << endl;
-//			}
-//			// Save to file : raw
+			if(!jsonResults.save("example_output_pretty.json",true)) {
+        cout << "example_output_pretty.json written unsuccessfully." << endl;
+			} else {
+        cout << "example_output_pretty.json written successfully." << endl;
+			}
+			// Save to file : raw
 //			if(!jsonResults.save("example_output_fast.json",false)) {
 //        cout << "example_output_pretty.json written unsuccessfully." << endl;
 //			} else {

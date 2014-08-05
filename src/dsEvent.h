@@ -21,7 +21,7 @@
 class dsEvent {
   
 public:
-  dsEvent(int iId, string iTimestring, string iStatus, float iLat, float iLon, string iCategory);
+  dsEvent(int iId, string iTimestring, string iStatus, float iLat, float iLon, string iCategory, string iDescription);
   ~dsEvent();
   
   int							getId(){ return id; }
@@ -32,6 +32,7 @@ public:
   float						getLon(){ return lon; }
   string					getNeighborhood(){ return neighborhood; }
   string					getCategory(){ return category; }
+  string					getDescription(){ return description; }
   void						setTime(Poco::DateTime iTime){ time = iTime; }
   void						setNeighborhood(string iNeighborhood){ neighborhood = iNeighborhood; }
   
@@ -49,6 +50,7 @@ private:
   float		lat;
   float		lon;
   string	category;
+  string	description;
   
   // Our additional custom attributes.
   Poco::DateTime	time;

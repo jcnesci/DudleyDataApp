@@ -66,6 +66,7 @@ public:
   vector<float>         graphEpmBuffer;
   
   ofxUICanvas*          UIreadouts;
+  vector<dsEvent*>      lastEventsForReadout;
   
 private:
   

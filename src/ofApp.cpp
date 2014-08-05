@@ -52,6 +52,7 @@ void ofApp::setup(){
   UIObject = new dsUIObject(citizensData);
   UIObject->setup();
   scene->getRoot()->addChild(UIObject);
+  UIObject->setZ(100);
   UIObject->setVisible(true);
   
   int cornerOffset = 20;

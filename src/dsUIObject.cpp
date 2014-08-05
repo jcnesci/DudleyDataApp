@@ -29,7 +29,6 @@ dsUIObject::dsUIObject(dsCitizensData* iData)
 dsUIObject::~dsUIObject()
 {
   delete UI;
-  delete demoLabel;
   delete numEventsLabel;
   delete timeToNextPullLabel;
   delete numNewEventsLabel;
@@ -76,13 +75,10 @@ void dsUIObject::setup()
   
   // Canvas title.
   UI->addLabel("[1] Dudley Data App", OFX_UI_FONT_MEDIUM);
-  
+  //
   UI->addSpacer();
-  
   // Updating FPS label.
-  demoLabel = NULL;
-  demoLabel = new ofxUILabel("FPS: "+ ofToString(ofGetFrameRate(), 2), OFX_UI_FONT_SMALL);
-  UI->addWidgetDown(demoLabel);
+  UI->addFPS(OFX_UI_FONT_SMALL);
   //
   UI->addSpacer();
   //
@@ -203,8 +199,17 @@ void dsUIObject::buildUIreadouts(){
   UIreadouts->setWidgetFontSize(OFX_UI_FONT_SMALL);
   
   UIreadouts->addLabel("[2] Readouts", OFX_UI_FONT_MEDIUM);
-  
   UIreadouts->addSpacer();
+  
+  // Get last few events to print text to UI as readout.
+  int numLastEventsDesired = 5;
+  vector<dsEvent*>::const_iterator first = data->getEvents().end() - numLastEventsDesired;
+  vector<dsEvent*>::const_iterator last = data->getEvents().end();
+  lastEventsForReadout.assign(first, last);
+  
+  
+  ofxUIScrollableCanvas *scrollZone = new ofxUIScrollableCanvas(0,readoutsY,readoutsWidth,readoutsHeight);
+  
 }
 
 void dsUIObject::idle(float iTime)
@@ -221,7 +226,6 @@ void dsUIObject::update()
 //  for(int i = 0; i < 256; i++) { buffer[i] = ofNoise(i/100.0, ofGetElapsedTimef()); }
   
   // Do something to the updating label (so it updates)
-  if (demoLabel){ demoLabel->setLabel("FPS: "+ ofToString(ofGetFrameRate(), 2)); }
   if (numEventsLabel){ numEventsLabel->setLabel("events: "+ ofToString(data->getNumEvents())); }
   if (timeToNextPullLabel){ timeToNextPullLabel->setLabel("next poll in: "+ ofToString(data->getTimeToNextPull()) +" secs"); }
   if (numNewEventsLabel){ numNewEventsLabel->setLabel("new events from last poll: "+ ofToString(data->getNumNewEvents())); }

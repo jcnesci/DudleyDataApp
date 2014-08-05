@@ -54,7 +54,7 @@ dsUIObject::~dsUIObject()
 
 void dsUIObject::setup()
 {
-  // Define UI Canvas Size Parameters
+  // Define the canvas for the Left Sidebar.
   int canvas_width = 280;
   int canvas_height = 600;
   UI = new ofxUICanvas(0, 0, canvas_width, canvas_height);
@@ -66,6 +66,8 @@ void dsUIObject::setup()
   // Disable mouse event callbacks because we have to flip the y-coords.
   UI->disableMouseEventCallbacks();
   
+  buildUIreadouts();
+  
   // ------------------------------------------------------------
   // UI items.
   // ------------------------------------------------------------
@@ -73,7 +75,7 @@ void dsUIObject::setup()
   UI->setWidgetFontSize(OFX_UI_FONT_SMALL);
   
   // Canvas title.
-  UI->addLabel("Dudley Data App", OFX_UI_FONT_MEDIUM);
+  UI->addLabel("[1] Dudley Data App", OFX_UI_FONT_MEDIUM);
   
   UI->addSpacer();
   
@@ -188,6 +190,23 @@ vector<float> dsUIObject::getGraphData(){
   return graphData;
 }
 
+void dsUIObject::buildUIreadouts(){
+  int ofAppCornerOffset = 20;
+  int readoutsHeight = 300;
+  int readoutsWidth = ofGetWidth() - (ofAppCornerOffset*2);
+  int readoutsY = ofGetHeight()-readoutsHeight - (ofAppCornerOffset*2);
+  // Define the canvas for the event readouts.
+  UIreadouts = new ofxUICanvas(0, readoutsY, readoutsWidth, readoutsHeight);
+  UIreadouts->setTheme(OFX_UI_THEME_MACOSX);
+  UIreadouts->disableAppEventCallbacks();
+  UIreadouts->disableMouseEventCallbacks();
+  UIreadouts->setWidgetFontSize(OFX_UI_FONT_SMALL);
+  
+  UIreadouts->addLabel("[2] Readouts", OFX_UI_FONT_MEDIUM);
+  
+  UIreadouts->addSpacer();
+}
+
 void dsUIObject::idle(float iTime)
 {
   
@@ -209,6 +228,7 @@ void dsUIObject::update()
   
   // Update the UI (ofxUICanvas)
   UI->update();
+  UIreadouts->update();
   
 }
 
@@ -245,6 +265,7 @@ void dsUIObject::render()
     ofScale(1, -1, 1);
     
     UI->draw();
+    UIreadouts->draw();
     
     ofPopMatrix();
   }
@@ -253,6 +274,7 @@ void dsUIObject::render()
 void dsUIObject::exit()
 {
   UI->exit();
+  UIreadouts->exit();
 }
 
 // Mouse callbacks that flip the y to bring interactions into soso universe.

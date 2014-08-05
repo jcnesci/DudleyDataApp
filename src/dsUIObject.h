@@ -35,6 +35,8 @@ public:
   void                toggleVisible() { isVisible = !isVisible; }
   void                setVisible(bool iIsVisible) { isVisible = iIsVisible; }
   
+  void                buildUIreadouts();
+  
   void                updateDropdown(string iDropdownName, string iNeighborhoodName);
   vector<float>       getGraphData();
   
@@ -62,6 +64,8 @@ public:
 
   ofxUIMovingGraph*     graphEpm;
   vector<float>         graphEpmBuffer;
+  
+  ofxUICanvas*          UIreadouts;
   
 private:
   

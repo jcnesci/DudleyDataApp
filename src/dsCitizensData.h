@@ -15,6 +15,8 @@
 #include "dsEvent.h"
 #include "dsCitizensDataSubscriber.h"
 #include "ofxObject.h"
+#include "dsJsonPollingObject.h"
+
 #include "Poco/LocalDateTime.h"
 #include "Poco/DateTime.h"
 #include "Poco/DateTimeFormatter.h"
@@ -104,6 +106,9 @@ public:
   int                   getCategoryOpenCount();
   int                   getCategoryClosedCount();
   float                 getCategoryOpenClosedRatio();
+  
+  void                  startRealtimePolling();
+  float                 getTimeOfLastPull(){ return timeOfLastPull; }
 
 	//DEV fcts
   void									printCategoryCounter();
@@ -152,5 +157,7 @@ private:
   bool                                    isNeighborhoodStatsCalculated = false;
   allStats                                allCategoryStats;
   bool                                    isCategoryStatsCalculated = false;
+  
+  dsJsonPollingObject*                    pollingThread;
 
 };

@@ -62,13 +62,17 @@ void dsCitizensData::setEnvironment(string iEnv, Poco::Timespan iTimeSpan){
 		cout << "***** error with production setup *****" << endl;
 	}
 	
-//	cout << jsonUrl << endl;
+	cout << jsonUrl << endl;
   
+  pollingThread = new dsJsonPollingObject(this);
 	fetchAllJson();
 
 }
 
-dsCitizensData::~dsCitizensData(){}
+dsCitizensData::~dsCitizensData(){
+  pollingThread->stopThread();
+  delete pollingThread;
+}
 
 // IDLE
 void dsCitizensData::idle(float iTime){
@@ -82,6 +86,7 @@ void dsCitizensData::idle(float iTime){
     if (timeOfLastPull) {
       timeSinceLastPull = ofGetElapsedTimef() - timeOfLastPull;
       if (timeSinceLastPull > pollingInterval) {
+        
 //        cout << "5 seconds!" <<endl;
         
         string currentStart = dateTimeToString(dateTimeOfLastPull);
@@ -90,6 +95,7 @@ void dsCitizensData::idle(float iTime){
 //        cout << start << endl;
 //        cout << jsonUrl << endl;
         fetchRealtimeEventJson();
+        
       }
     }
     
@@ -132,14 +138,13 @@ void dsCitizensData::fetchRealtimeEventJson(){
   
 	if (parsingSuccessful) {
 		
-//    cout  << "---------------- Successfully parsed JSON" << endl;
-		
-		// cout << jsonResults.getRawString() << endl;
+    cout  << "---------------- Successfully parsed REALTIME JSON" << endl;
+//    cout << jsonResults.getRawString() << endl;
     
 		if (jsonResults.size() > 0) {
 			
 //			cout << "New event(s): " << jsonResults.size() << endl;
-			
+
       
 			//  Create an event for each piece of data.
 			for(int i=0; i<jsonResults.size(); i++) {
@@ -198,13 +203,13 @@ void dsCitizensData::fetchRealtimeEventJson(){
 //			}
 			
 			
-
-			cout << "Total Event Size: " << events.size() << endl;
-			if (initialEventSize != 0) {
-				for (int i = initialEventSize; i < events.size(); i++) {
-					updateSubscribers(events[i]);
-				}
-			}
+      //DEV_jn
+//			cout << "Total Event Size: " << events.size() << endl;
+//			if (initialEventSize != 0) {
+//				for (int i = initialEventSize; i < events.size(); i++) {
+//					updateSubscribers(events[i]);
+//				}
+//			}
 
       cout << "dsCitizensData::fetchRealtimeEventJson- # new events: " << jsonResults.size() << endl;
       cout << "dsCitizensData::fetchRealtimeEventJson- # total events: " << events.size() << endl;
@@ -315,10 +320,16 @@ void dsCitizensData::fetchHistoricEventJson(){
           
           timeOfLastPull = ofGetElapsedTimef();        // setting the current time for realtime polling.
           dateTimeOfLastPull = currentDateTime();
-          pollingActivated = true;
+
+          //DEV_jn: converting realtime polling to a thread.
+//          pollingActivated = true;
+          startRealtimePolling();     //TODO: check if this works.
         }
         
       }
+      
+      //DEV_jn: TEMP, only testing that the thread works even though the server is down. REMOVE LATER.
+      startRealtimePolling();
       
 		} else {
 //			cout << "dsCitizensData::fetchHistoricEventJson- No results." << endl;
@@ -328,6 +339,11 @@ void dsCitizensData::fetchHistoricEventJson(){
 		cout  << "ERROR- dsCitizensData::fetchHistoricEventJson- Failed to parse JSON" << endl;
 	}
   
+}
+
+void dsCitizensData::startRealtimePolling(){
+  pollingThread->startThread(true);
+  ofLogVerbose("ofThread");
 }
 
 dsNeighborhood* dsCitizensData::getNeighborhoodByName(string iNeighborhoodName){

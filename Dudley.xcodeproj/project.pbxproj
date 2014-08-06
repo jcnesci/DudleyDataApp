@@ -99,6 +99,7 @@
 		E0B1A3B41989D5EB00BB78AD /* ofxUIWaveform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0B1A3831989D5EB00BB78AD /* ofxUIWaveform.cpp */; };
 		E0B1A3B51989D5EB00BB78AD /* ofxUIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0B1A3851989D5EB00BB78AD /* ofxUIWidget.cpp */; };
 		E0B1A3B61989D5EB00BB78AD /* ofxUIWidgetWithLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0B1A3881989D5EB00BB78AD /* ofxUIWidgetWithLabel.cpp */; };
+		E0FC2B3E1992978F00EB8034 /* dsJsonPollingObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E0FC2B3C1992978F00EB8034 /* dsJsonPollingObject.cpp */; };
 		E110B2F7DD0801265DDDB9DC /* ofxAVFVideoPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = A4DEA54B98B862847263B807 /* ofxAVFVideoPlayer.mm */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -347,6 +348,8 @@
 		E0B1A3881989D5EB00BB78AD /* ofxUIWidgetWithLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUIWidgetWithLabel.cpp; sourceTree = "<group>"; };
 		E0B1A3891989D5EB00BB78AD /* ofxUIWidgetWithLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWidgetWithLabel.h; sourceTree = "<group>"; };
 		E0B1A38A1989D5EB00BB78AD /* ofxUIWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWrapper.h; sourceTree = "<group>"; };
+		E0FC2B3C1992978F00EB8034 /* dsJsonPollingObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dsJsonPollingObject.cpp; sourceTree = "<group>"; };
+		E0FC2B3D1992978F00EB8034 /* dsJsonPollingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dsJsonPollingObject.h; sourceTree = "<group>"; };
 		E2413011F1A523DC723DFA74 /* ofxAnimation.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAnimation.h; path = ../../../addons/ofxSoso/src/ofxAnimation.h; sourceTree = SOURCE_ROOT; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -568,6 +571,8 @@
 				E0979ED2197F18360083C914 /* dsEventCollection.h */,
 				E0979ED4197F2CC70083C914 /* dsCitizensDataSubscriber.cpp */,
 				E0979ED5197F2CC70083C914 /* dsCitizensDataSubscriber.h */,
+				E0FC2B3C1992978F00EB8034 /* dsJsonPollingObject.cpp */,
+				E0FC2B3D1992978F00EB8034 /* dsJsonPollingObject.h */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1019,6 +1024,7 @@
 				E0B1A3B51989D5EB00BB78AD /* ofxUIWidget.cpp in Sources */,
 				E0B1A39E1989D5EB00BB78AD /* ofxUILabelToggle.cpp in Sources */,
 				5D04709153840DD47890BD38 /* ofxSosoTrueTypeFont.cpp in Sources */,
+				E0FC2B3E1992978F00EB8034 /* dsJsonPollingObject.cpp in Sources */,
 				E0384D3519759E090098E489 /* dsNeighborhood.cpp in Sources */,
 				22A492C7ECE9639317C8CA31 /* ofxStateMachine.cpp in Sources */,
 				E0384D1B19705D010098E489 /* ofxJSONElement.cpp in Sources */,

@@ -6,6 +6,8 @@
 //
 //
 
+//TODO: add locks and unlocks where necessary. Will they be necessary in citizensData too?
+
 #include "dsJsonPollingObject.h"
 #include "dsCitizensData.h"       // to complete foward-declaration in substance.
 
@@ -18,11 +20,8 @@ dsJsonPollingObject::~dsJsonPollingObject(){}
 void dsJsonPollingObject::threadedFunction(){
 
 //  lock();
-//  timeOfLastPull = data->getTimeOfLastPull();
+  timeOfLastPull = data->getTimeOfLastPull();
 //  unlock();
-
-  timeOfLastPull = ofGetElapsedTimef();
-  
   ofLogNotice("time = "+ ofToString(timeOfLastPull));
   
   while(isThreadRunning()) {
@@ -34,19 +33,22 @@ void dsJsonPollingObject::threadedFunction(){
 
           // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         cout << "5 secs" <<endl;
-//        string currentStart = dateTimeToString(dateTimeOfLastPull);
-//        jsonUrl = baseUrl + "?" + envPull + "=" + currentStart + "&page_size=" + rtPageSize + "&page=" + rtPageNum;
-        //        cout << start << endl;
-        //        cout << jsonUrl << endl;
-//        fetchRealtimeEventJson();
+        string currentStart = data->getDateTimeOfLastPullString();
+
+        //TODO: finish creating getter methods for baseUrl, etc.
+        //        data->setJsonUrl(baseUrl + "?" + envPull + "=" + currentStart + "&page_size=" + rtPageSize + "&page=" + rtPageNum);
         
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        cout << currentStart << endl;
+//        cout << jsonUrl << endl;
+        
+        // Try to fetch new data since last pull.
         lock();
         data->fetchRealtimeEventJson();
         unlock();
         
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        timeOfLastPull = ofGetElapsedTimef();
+        // Update timers.
+        timeOfLastPull = data->getTimeOfLastPull();
+        ofLogNotice("time = "+ ofToString(timeOfLastPull));
         
       }
     }

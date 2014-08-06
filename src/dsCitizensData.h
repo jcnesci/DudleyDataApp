@@ -107,8 +107,11 @@ public:
   int                   getCategoryClosedCount();
   float                 getCategoryOpenClosedRatio();
   
+  // Polling stuff.
   void                  startRealtimePolling();
   float                 getTimeOfLastPull(){ return timeOfLastPull; }
+  string                getDateTimeOfLastPullString(){ return dateTimeToString(dateTimeOfLastPull); }
+  void                  setJsonUrl(string iUrl);
 
 	//DEV fcts
   void									printCategoryCounter();

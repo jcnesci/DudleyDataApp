@@ -74,6 +74,7 @@ dsCitizensData::~dsCitizensData(){
   delete pollingThread;
 }
 
+//DEV_jn: idle is unused for polling right now, instead we are making it happen in a thread obj.
 // IDLE
 void dsCitizensData::idle(float iTime){
   
@@ -322,14 +323,23 @@ void dsCitizensData::fetchHistoricEventJson(){
           dateTimeOfLastPull = currentDateTime();
 
           //DEV_jn: converting realtime polling to a thread.
-//          pollingActivated = true;
-          startRealtimePolling();     //TODO: check if this works.
+//          pollingActivated = true;    //OLD
+//          startRealtimePolling();     //TODO: check if this works.
         }
         
       }
-      
-      //DEV_jn: TEMP, only testing that the thread works even though the server is down. REMOVE LATER.
-      startRealtimePolling();
+      // If in "dev_static", here are the dev actions we are playing with.
+      else {
+        
+        cout << "dsCitizensData::fetchHistoricEventJson-DEV_STATIC Total Event Size: " << events.size() << endl;
+        cout << "dsCitizensData::fetchHistoricEventJson-DEV_STATIC jsonUrl: " << jsonUrl << endl;
+
+        timeOfLastPull = ofGetElapsedTimef();        // setting the current time for realtime polling.
+        dateTimeOfLastPull = currentDateTime();
+
+        //DEV_jn: TEMP, only testing that the thread works even though the server is down. REMOVE LATER.
+        startRealtimePolling();
+      }
       
 		} else {
 //			cout << "dsCitizensData::fetchHistoricEventJson- No results." << endl;
@@ -709,4 +719,8 @@ int dsCitizensData::getCategoryHourCount(){
 int dsCitizensData::getCategoryWeekCount(){
   calculateAllCategoryStats();
   return allCategoryStats.nThisWeek;
+}
+
+void dsCitizensData::setJsonUrl(string iUrl){
+  jsonUrl = iUrl;
 }
